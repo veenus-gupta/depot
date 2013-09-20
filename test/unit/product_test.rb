@@ -50,8 +50,17 @@ class ProductTest < ActiveSupport::TestCase
 		:description => "yyy" ,
 		:price => 1,
 		:image_url => "fred.gif" )
+		# assert
 		assert !product.save
 		assert_equal "has already been taken" , product.errors[:title].join('; ' )
+  end
+  test "product title length" do
+  	product = Product.new(:title => "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  		:description => products(:t_length).description,
+  		:price => products(:t_length).price,
+  		:image_url => products(:t_length).image_url)
+    assert !product.save
+    assert_equal "length should be less than 20 chars only", product.errors[:title].join('; ' )
   end
 
 end

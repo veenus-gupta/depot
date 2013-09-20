@@ -1,6 +1,15 @@
 require 'test_helper'
 
 class ProductsControllerTest < ActionController::TestCase
+  test "should get index" do
+    get :index
+    assert_response :success
+    # assert_select '#columns #side a' , :minimum => 4
+    assert_select '.list_description' , 4
+    assert_select 'dt' , 'MyString'
+    assert_not_nil assigns(:products)
+  end
+
   setup do
     @product = products(:one)
     @update = {
@@ -10,12 +19,6 @@ class ProductsControllerTest < ActionController::TestCase
       :price => 19.95
     }
 
-  end
-
-  test "should get index" do
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:products)
   end
 
   test "should get new" do
